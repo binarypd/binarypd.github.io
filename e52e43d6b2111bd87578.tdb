@@ -1,0 +1,48 @@
+$  case_sensitive 
+
+Element         /-          ELECTRON_GAS         0         0         0 !
+Element         Al                   Fcc    26.982      4540      28.3 !
+Element          B         BETA_RHOMBO_B    10.811      1222       5.9 !
+Element         Va                VACUUM         0         0         0 !
+
+
+Function GHSERAL 298.15   -7976.15+137.093038*T-24.3671976*T*ln(T)-.001884662*T**2-8.77664e-07*T**3+74092*T**(-1); 700 Y
+    -11276.24+223.048446*T-38.5844296*T*ln(T)+.018531982*T**2-5.764227e-06*T**3+74092*T**(-1); 933.47 Y
+    -11278.378+188.684153*T-31.748192*T*ln(T)-1.231e+28*T**(-9); 6000 N !
+Function GDIAMONDAL 298.15   -7976.15+167.093038*T-24.3671976*T*ln(T)-0.001884662*T**2-8.77664e-007*T**3+74092*T**(-1); 700 Y
+    -11276.24+253.048446*T-38.5844296*T*ln(T)+0.018531982*T**2-5.764227e-006*T**3+74092*T**(-1); 933.47 Y
+    -11278.378+218.684153*T-31.748192*T*ln(T)-1.230524e+028*T**(-9); 2900 N !
+Function GLIQAL 298.15   +11005.029-11.841867*T+7.934e-20*T**7+GHSERAL; 933.47 Y
+    0.0917168+10482.282-11.253974*T+1.231e+28*T**(-9)+GHSERAL; 6000 N !
+Function GHSERB 298.15   -7735.284+107.111864*T-15.6641*T*ln(T)-.006864515*T**2+6.18878e-07*T**3+370843*T**(-1); 1100 Y
+    -16649.474+184.801744*T-26.6047*T*ln(T)-7.9809e-04*T**2-2.556e-08*T**3+1748270*T**(-1); 2348 Y
+    -36667.582+231.336244*T-31.5957527*T*ln(T)-.00159488*T**2+1.34719e-07*T**3+11205883*T**(-1); 3000 Y
+    -21530.653+222.396264*T-31.4*T*ln(T); 6000 N !
+Function GBCCB 298.15   +50208-13.472*T+GHSERB; 6000 N !
+Function GDIAMONDB 298.15   +10+GHSERB; 6000 N !
+Function GLIQB 298.15   +40723.275+86.843839*T-15.6641*T*ln(T)-0.006864515*T**2+6.18878e-007*T**3+370843*T**(-1); 500 Y
+    41119.703+82.101722*T-14.9827763*T*ln(T)-0.007095669*T**2+5.07347e-007*T**3+335484*T**(-1); 2348 Y
+    28842.012+200.94731*T-31.4*T*ln(T); 6000 N !
+
+Type_Definition ' GES AMEND_PHASE_DESCRIPTION Fcc MAGNETIC -3 0.28 !
+
+
+Phase Liquid % 1 1 !
+Constituent Liquid :Al,B:!
+    Parameter G(Liquid,Al;0) 298.15  GLIQAL; 2900 N !
+    Parameter G(Liquid,B;0) 298.15  GLIQB; 6000 N !
+
+Phase Fcc %' 2 1 1 !
+Constituent Fcc :Al,B:Va:!
+    Parameter G(Fcc,Al:Va;0) 298.15  GHSERAL; 2900 N !
+    Parameter G(Fcc,B:Va;0) 298.15  GBCCB; 6000 N !
+
+Phase BETA_RHOMBO_B % 1 1 !
+Constituent BETA_RHOMBO_B :B:!
+    Parameter G(BETA_RHOMBO_B,B;0) 298.15  GHSERB; 6000 N !
+
+Phase DIAMOND_A4 % 1 1 !
+Constituent DIAMOND_A4 :Al,B:!
+    Parameter G(DIAMOND_A4,Al;0) 298.15  GDIAMONDAL; 2900 N !
+    Parameter G(DIAMOND_A4,B;0) 298.15  GDIAMONDB; 6000 N !
+

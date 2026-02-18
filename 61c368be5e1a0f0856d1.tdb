@@ -1,0 +1,86 @@
+$  case_sensitive 
+
+Element         Ag                   Fcc   107.868      5745     42.55 !
+Element         Se          HEXAGONAL_A8     78.96    5514.5    41.966 !
+Element         /-          ELECTRON_GAS         0         0         0 !
+Element         Va                VACUUM         0         0         0 !
+
+SPECIES         Ag2Se                 Ag2Se1!
+
+
+Function GHSERAG 298.15   -7209.512+118.202013*T-23.8463314*T*ln(T)
+-0.001790585*T**2-3.98587e-007*T**3-12011*T**(-1); 1234.93 Y
+    -15095.252+190.266404*T-33.472*T*ln(T)
+	+1.411773e+029*T**(-9); 3000 N !
+Function GBCCAG 298.15   +3400-1.05*T+GHSERAG; 3000 N !
+Function GBCTAG 298.15   4184.1+GHSERAG; 3000 N !
+Function GCUBAG 298.15   +500+GBCCAG; 3000 N !
+Function GHCPAG 298.15   300+0.3*T+GHSERAG; 3000 N !
+Function GLIQAG 298.15   3815.564+109.310993*T-23.8463314*T*ln(T)
+-0.001790585*T**2-3.98587e-007*T**3-12011*T**(-1)-1.033905e-020*T**7; 1234.93 Y
+    -3587.111+180.964656*T-33.472*T*ln(T); 3000 N !
+Function GHSERSE 298.15   -9376.371+174.205877*T-33.6527*T*ln(T)
++0.02424314*T**2-1.5318461e-005*T**3+102249*T**(-1); 494 Y
+    -37546.134+507.111538*T-81.2006585*T*ln(T)+0.037144892*T**2
+	-5.611026e-006*T**3+2614263*T**(-1); 800 Y
+    -12193.47+197.770166*T-35.1456*T*ln(T); 1000 N !
+Function GLIQSE 298.15   50533.347-1178.288242*T+194.1074389*T*ln(T)
+-0.390268991*T**2+0.000119219297*T**3-2224398*T**(-1); 494 Y
+    -5228.304+183.72559*T-35.1456*T*ln(T); 1000 N !
+
+Type_Definition ' GES AMEND_PHASE_DESCRIPTION FCC_A1 MAGNETIC -3 0.28 !
+Type_Definition ( GES AMEND_PHASE_DESCRIPTION BCC MAGNETIC -1 0.4 !
+Type_Definition ) GES AMEND_PHASE_DESCRIPTION HCP MAGNETIC -3 0.28 !
+
+Phase LIQUID % 1 1 !
+Constituent LIQUID :Ag,Ag2Se,Se:!
+    Parameter G(LIQUID,Ag;0) 298.15  GLIQAG; 3000 N !
+    Parameter G(LIQUID,Se;0) 298.15  GLIQSE; 1000 N !
+	Parameter G(LIQUID,Ag2Se;0) 298.15  -47806
+	+2*GLIQAG+GLIQSE; 1000 N !
+	Parameter L(LIQUID,Ag,Ag2Se;0) 298.15  32500-6*T; 1000 N !
+	Parameter L(LIQUID,Ag,Ag2Se;1) 298.15  3000; 1000 N !
+	Parameter L(LIQUID,Ag,Se;0) 298.15  7600-5*T; 1000 N !
+	Parameter L(LIQUID,Ag2Se,Se;0) 298.15  -10000+27*T; 1000 N !
+	Parameter L(LIQUID,Ag2Se,Se;1) 298.15  -25500+10*T; 1000 N !
+	
+
+Phase BCC %( 2 1 3 !
+Constituent BCC :Ag:Va:!
+    Parameter G(BCC,Ag:Va;0) 298.15  GBCCAG; 3000 N !
+
+Phase FCC_A1 %' 2 1 1 !
+Constituent FCC_A1 :Ag:Va:!
+    Parameter G(FCC_A1,Ag:Va;0) 298.15  GHSERAG; 3000 N !
+
+Phase HCP %) 2 1 0.5 !
+Constituent HCP :Ag:Va:!
+    Parameter G(HCP,Ag:Va;0) 298.15  GHCPAG; 3000 N !
+
+Phase BCT_A5 % 1 1 !
+Constituent BCT_A5 :Ag:!
+    Parameter G(BCT_A5,Ag;0) 298.15  GBCTAG; 3000 N !
+
+Phase CUB_A13 % 2 1 1 !
+Constituent CUB_A13 :Ag:Va:!
+    Parameter G(CUB_A13,Ag:Va;0) 298.15  GCUBAG; 3000 N !
+
+Phase DHCP % 1 1 !
+Constituent DHCP :Ag:!
+    Parameter G(DHCP,Ag;0) 298.15  GHSERAG+1000; 4000 N !
+
+Phase HEXAGONAL_A8 % 1 1 !
+Constituent HEXAGONAL_A8 :Se:!
+    Parameter G(HEXAGONAL_A8,Se;0) 298.15  GHSERSE; 1000 N !
+
+$$$binary compounds
+Phase ALPHA_Ag2Se % 2 0.667 0.333 !
+Constituent ALPHA_Ag2Se :Ag:Se:!
+    Parameter G(ALPHA_Ag2Se,Ag:Se;0) 298.15  -14902.187+14.6053475*T
+	-1.8979*T*LN(T)+0.667*GHSERAG+0.333*GHSERSE; 4000 N !
+	
+Phase BETA_Ag2Se % 2 0.667 0.333 !
+Constituent BETA_Ag2Se :Ag:Se:!
+    Parameter G(BETA_Ag2Se,Ag:Se;0) 298.15  -18806.2655+129.190577*T
+	-26.508713*T*LN(T)-0.00154179941*T**2+1.2365036E-07*T**3
+	+1.03415636*T**(-1)+1.7179509E-27*T**9+0.324399828*T**(-7); 4000 N !
