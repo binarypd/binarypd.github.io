@@ -149,7 +149,7 @@
     grid-template-columns: max-content max-content;
     column-gap: ${({theme:e})=>e.spacing.xl};
     row-gap: ${({theme:e})=>e.spacing.m};
-`,Fn=({studyData:{reference:e,database:t,databaseFileName:i}})=>e?(0,a.jsxs)(Nn,{children:[(0,a.jsx)("span",{children:"Source:"}),(0,a.jsx)("a",{href:e.link,target:"_blank",rel:"noreferrer",children:e.text}),(0,a.jsx)("span",{children:"Database:"}),(0,a.jsx)("a",{href:`data:text/plain;charset=utf-8,${encodeURIComponent(t)}`,download:i,children:i})]}):null;function xn(e){return e.toLowerCase().replace(/\s/,"")}const yn=Yi.div`
+`,Fn=({studyData:{reference:e,database:t,databaseFileName:i}})=>e?(0,a.jsxs)(Nn,{children:[(0,a.jsx)("span",{children:"Source:"}),(0,a.jsx)("a",{href:e.link,target:"_blank",rel:"noreferrer",children:e.text}),(0,a.jsx)("span",{children:"Database:"}),(0,a.jsx)("a",{href:t,download:i,children:i})]}):null;function xn(e){return e.toLowerCase().replace(/\s/,"")}const yn=Yi.div`
     display: flex;
     flex-flow: column nowrap;
     text-align: center;
